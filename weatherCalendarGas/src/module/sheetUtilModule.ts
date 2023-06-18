@@ -1,23 +1,4 @@
 namespace SheetUtilModule {
-  // 初期のプルダウンを設定
-  export const setPulldown = (e: any) => {
-    const sheet = e.source.getSheetByName(ConstantsModule.SETTING_SHEET_NAME);
-    if (sheet) {
-      // カレンダーの区分選択プルダウンを作成
-      const calendarCategoryRule = SpreadsheetApp.newDataValidation()
-        .requireValueInList([
-          ConstantsModule.CALENDAR_SELECT_DEFAULT,
-          ConstantsModule.CALENDAR_SELECT_ID_INPUT,
-        ])
-        .build();
-      const calendarCategoryCell: GoogleAppsScript.Spreadsheet.Range = sheet.getRange(
-        ConstantsModule.CALENDAR_SELECT_POS.row,
-        ConstantsModule.CALENDAR_SELECT_POS.column,
-      );
-      calendarCategoryCell.setDataValidation(calendarCategoryRule);
-    }
-  };
-
   // 変更対象のセルを取得
   export const getChangeCellPos = (e: any): ConstantsModule.CellPosition | undefined => {
     if (e.source.getSheetName() === ConstantsModule.SETTING_SHEET_NAME) {
@@ -48,5 +29,18 @@ namespace SheetUtilModule {
         return;
       }
     }
+  };
+
+  // 入力欄セルの初期化処理
+  export const clearInputCell = (
+    headerCell: GoogleAppsScript.Spreadsheet.Range,
+    valueCell: GoogleAppsScript.Spreadsheet.Range,
+  ) => {
+    headerCell.setValue(null);
+    headerCell.setBackground('white');
+    headerCell.setBorder(false, null, false, false, false, false);
+    valueCell.setValue(null);
+    valueCell.setBackground('white');
+    valueCell.setBorder(false, null, false, false, false, false);
   };
 }
