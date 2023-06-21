@@ -1,4 +1,4 @@
-namespace LocationUtilModule {
+namespace LocationSettingModule {
   // デフォルト地域選択の初期プルダウンを設定
   export const setLocationSelectPulldown = (e: any) => {
     const sheet = e.source.getSheetByName(ConstantsModule.SETTING_SHEET_NAME);
@@ -89,5 +89,67 @@ namespace LocationUtilModule {
       valueLonCell.setBorder(true, true, true, true, false, false);
       return;
     }
+  };
+
+  // 緯度と経度のオブジェクトをセルから取得
+  export const getLocationLatLon = (): ConstantsModule.LatLon | undefined => {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
+      ConstantsModule.SETTING_SHEET_NAME,
+    );
+    // 緯度の値
+    const latCell: GoogleAppsScript.Spreadsheet.Range = sheet!.getRange(
+      ConstantsModule.LAT_INPUT_POS.row,
+      ConstantsModule.LAT_INPUT_POS.column,
+    );
+    const latValue = parseFloat(latCell.getValue());
+    // 経度の値
+    const lonCell: GoogleAppsScript.Spreadsheet.Range = sheet!.getRange(
+      ConstantsModule.LON_INPUT_POS.row,
+      ConstantsModule.LON_INPUT_POS.column,
+    );
+    const lonValue = parseFloat(lonCell.getValue());
+
+    if (isNaN(latValue) || isNaN(lonValue)) {
+      return undefined;
+    }
+    return {
+      lat: latValue,
+      lon: lonValue,
+    };
+  };
+
+  // 地域設定の入力チェック
+  export const validateLocationInput = (): string | undefined => {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
+      ConstantsModule.SETTING_SHEET_NAME,
+    );
+    if (!sheet) {
+      return 'シートの設定に誤りがあります。';
+    }
+    const selectCell: GoogleAppsScript.Spreadsheet.Range = sheet!.getRange(
+      ConstantsModule.LOCATION_SELECT_POS.row,
+      ConstantsModule.LOCATION_SELECT_POS.column,
+    );
+    if (selectCell.getValue() == ConstantsModule.LOCATION_SELECT_PREFECTURE) {
+      const prefectureCell: GoogleAppsScript.Spreadsheet.Range = sheet!.getRange(
+        ConstantsModule.PREFECTURE_SELECT_POS.row,
+        ConstantsModule.PREFECTURE_SELECT_POS.column,
+      );
+      const prefectureValue = ConstantsModule.PREFECTURE_LAT_LON_LIST.find(
+        (p) => p.prefecture == prefectureCell.getValue(),
+      );
+      if (!prefectureValue) {
+        return '都道府県を選択をしてください。';
+      }
+      return undefined;
+    } else if (selectCell.getValue() == ConstantsModule.LOCATION_SELECT_POS) {
+      const latLon = LocationSettingModule.getLocationLatLon();
+      if (!latLon) {
+        return '緯度・経度を入力してください。';
+      }
+      return undefined;
+    }
+
+    return 'デフォルト地域設定の区分を選択してください。';
   };
 }

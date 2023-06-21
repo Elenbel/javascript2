@@ -16,6 +16,11 @@ namespace ConstantsModule {
   // カレンダーID直接指定のセル位置
   export const CALENDAR_ID_POS: CellPosition = { row: 8, column: 4 };
 
+  export type LatLon = {
+    lat: number;
+    lon: number;
+  };
+
   // デフォルト地域設定の区分プルダウン
   export const LOCATION_SELECT_PREFECTURE = '都道府県選択';
   export const LOCATION_SELECT_INPUT = '緯度・経度入力';

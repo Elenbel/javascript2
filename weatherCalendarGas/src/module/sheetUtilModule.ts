@@ -17,7 +17,7 @@ namespace SheetUtilModule {
         changePos.row === ConstantsModule.CALENDAR_SELECT_POS.row &&
         changePos.column === ConstantsModule.CALENDAR_SELECT_POS.column
       ) {
-        CalendarUtilModule.onChangeCalendarCategory(e, changeCellValue);
+        CalendarSettingModule.onChangeCalendarCategory(e, changeCellValue);
         return;
       }
       // デフォルト地域の区分変更
@@ -25,7 +25,7 @@ namespace SheetUtilModule {
         changePos.row === ConstantsModule.LOCATION_SELECT_POS.row &&
         changePos.column === ConstantsModule.LOCATION_SELECT_POS.column
       ) {
-        LocationUtilModule.onChangeLocationSelect(e, changeCellValue);
+        LocationSettingModule.onChangeLocationSelect(e, changeCellValue);
         return;
       }
     }
@@ -42,5 +42,11 @@ namespace SheetUtilModule {
     valueCell.setValue(null);
     valueCell.setBackground('white');
     valueCell.setBorder(false, null, false, false, false, false);
+  };
+
+  // ダイアログの表示
+  export const displayDialog = (message: string) => {
+    const htmlOutput = HtmlService.createHtmlOutput(message).setWidth(400).setHeight(50);
+    SpreadsheetApp.getUi().showModalDialog(htmlOutput, '登録実行');
   };
 }
