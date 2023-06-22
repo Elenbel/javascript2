@@ -1,8 +1,8 @@
 // ファイル起動時に実行される関数
 function onOpen(e: any) {
   // プルダウンの初期設定
-  CalendarSettingModule.setCalendarSelectPulldown(e);
-  LocationSettingModule.setLocationSelectPulldown(e);
+  CalendarSettingModule.setCalendarSelectPulldown();
+  LocationSettingModule.setLocationSelectPulldown();
 }
 
 // セル変更時に実行される関数

@@ -1,4 +1,9 @@
 namespace SheetUtilModule {
+  // 設定シートを取得
+  export const getSettingSheet = (): GoogleAppsScript.Spreadsheet.Sheet | null => {
+    return SpreadsheetApp.getActiveSpreadsheet().getSheetByName(ConstantsModule.SETTING_SHEET_NAME);
+  };
+
   // 変更対象のセルを取得
   export const getChangeCellPos = (e: any): ConstantsModule.CellPosition | undefined => {
     if (e.source.getSheetName() === ConstantsModule.SETTING_SHEET_NAME) {

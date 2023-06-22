@@ -1,7 +1,7 @@
 namespace LocationSettingModule {
   // デフォルト地域選択の初期プルダウンを設定
-  export const setLocationSelectPulldown = (e: any) => {
-    const sheet = e.source.getSheetByName(ConstantsModule.SETTING_SHEET_NAME);
+  export const setLocationSelectPulldown = () => {
+    const sheet = SheetUtilModule.getSettingSheet();
     if (sheet) {
       // デフォルト地域選択の区分プルダウンを作成
       const locationCategoryRule = SpreadsheetApp.newDataValidation()
@@ -93,17 +93,19 @@ namespace LocationSettingModule {
 
   // 緯度と経度のオブジェクトをセルから取得
   export const getLocationLatLon = (): ConstantsModule.LatLon | undefined => {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
-      ConstantsModule.SETTING_SHEET_NAME,
-    );
+    const sheet = SheetUtilModule.getSettingSheet();
+    if (!sheet) {
+      return undefined;
+    }
+
     // 緯度の値
-    const latCell: GoogleAppsScript.Spreadsheet.Range = sheet!.getRange(
+    const latCell: GoogleAppsScript.Spreadsheet.Range = sheet.getRange(
       ConstantsModule.LAT_INPUT_POS.row,
       ConstantsModule.LAT_INPUT_POS.column,
     );
     const latValue = parseFloat(latCell.getValue());
     // 経度の値
-    const lonCell: GoogleAppsScript.Spreadsheet.Range = sheet!.getRange(
+    const lonCell: GoogleAppsScript.Spreadsheet.Range = sheet.getRange(
       ConstantsModule.LON_INPUT_POS.row,
       ConstantsModule.LON_INPUT_POS.column,
     );
@@ -120,18 +122,16 @@ namespace LocationSettingModule {
 
   // 地域設定の入力チェック
   export const validateLocationInput = (): string | undefined => {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
-      ConstantsModule.SETTING_SHEET_NAME,
-    );
+    const sheet = SheetUtilModule.getSettingSheet();
     if (!sheet) {
       return 'シートの設定に誤りがあります。';
     }
-    const selectCell: GoogleAppsScript.Spreadsheet.Range = sheet!.getRange(
+    const selectCell: GoogleAppsScript.Spreadsheet.Range = sheet.getRange(
       ConstantsModule.LOCATION_SELECT_POS.row,
       ConstantsModule.LOCATION_SELECT_POS.column,
     );
     if (selectCell.getValue() == ConstantsModule.LOCATION_SELECT_PREFECTURE) {
-      const prefectureCell: GoogleAppsScript.Spreadsheet.Range = sheet!.getRange(
+      const prefectureCell: GoogleAppsScript.Spreadsheet.Range = sheet.getRange(
         ConstantsModule.PREFECTURE_SELECT_POS.row,
         ConstantsModule.PREFECTURE_SELECT_POS.column,
       );
@@ -142,7 +142,7 @@ namespace LocationSettingModule {
         return '都道府県を選択をしてください。';
       }
       return undefined;
-    } else if (selectCell.getValue() == ConstantsModule.LOCATION_SELECT_POS) {
+    } else if (selectCell.getValue() == ConstantsModule.LOCATION_SELECT_INPUT) {
       const latLon = LocationSettingModule.getLocationLatLon();
       if (!latLon) {
         return '緯度・経度を入力してください。';

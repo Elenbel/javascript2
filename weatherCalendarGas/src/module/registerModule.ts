@@ -6,6 +6,11 @@ namespace RegisterModule {
       return calendarError;
     }
 
+    const locationError = LocationSettingModule.validateLocationInput();
+    if (locationError) {
+      return locationError;
+    }
+
     return undefined;
   };
 

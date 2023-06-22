@@ -1,7 +1,7 @@
 namespace CalendarSettingModule {
   // カレンダーの初期プルダウンを設定
-  export const setCalendarSelectPulldown = (e: any) => {
-    const sheet = e.source.getSheetByName(ConstantsModule.SETTING_SHEET_NAME);
+  export const setCalendarSelectPulldown = () => {
+    const sheet = SheetUtilModule.getSettingSheet();
     if (sheet) {
       // カレンダーの区分選択プルダウンを作成
       const calendarCategoryRule = SpreadsheetApp.newDataValidation()
@@ -49,20 +49,18 @@ namespace CalendarSettingModule {
 
   // カレンダー設定の入力チェック
   export const validateCalendarInput = (): string | undefined => {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(
-      ConstantsModule.SETTING_SHEET_NAME,
-    );
+    const sheet = SheetUtilModule.getSettingSheet();
     if (!sheet) {
       return 'シートの設定に誤りがあります。';
     }
-    const selectCell: GoogleAppsScript.Spreadsheet.Range = sheet!.getRange(
+    const selectCell: GoogleAppsScript.Spreadsheet.Range = sheet.getRange(
       ConstantsModule.CALENDAR_SELECT_POS.row,
       ConstantsModule.CALENDAR_SELECT_POS.column,
     );
     if (selectCell.getValue() == ConstantsModule.CALENDAR_SELECT_DEFAULT) {
       return undefined;
     } else if (selectCell.getValue() == ConstantsModule.CALENDAR_SELECT_ID_INPUT) {
-      const idCell: GoogleAppsScript.Spreadsheet.Range = sheet!.getRange(
+      const idCell: GoogleAppsScript.Spreadsheet.Range = sheet.getRange(
         ConstantsModule.CALENDAR_ID_POS.row,
         ConstantsModule.CALENDAR_ID_POS.column,
       );
