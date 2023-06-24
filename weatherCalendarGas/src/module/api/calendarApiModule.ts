@@ -19,4 +19,23 @@ namespace CalendarApiModule {
     );
     return CalendarApp.getCalendarById(idCell.getValue());
   };
+
+  // 現在日時含めて6日間のスケジュールを取得
+  export const getCalendarSchedules = (): GoogleAppsScript.Calendar.CalendarEvent[] => {
+    const calendar = CalendarApiModule.getCalendarObject();
+    if (!calendar) {
+      return [];
+    }
+
+    // 現在日付
+    const nowDate = new Date();
+    // 5日後の終わりの日時
+    const after5DayDate = new Date();
+    after5DayDate.setDate(nowDate.getDate() + 5);
+    after5DayDate.setHours(23);
+    after5DayDate.setMinutes(59);
+    after5DayDate.setSeconds(59);
+
+    return calendar.getEvents(nowDate, after5DayDate);
+  };
 }

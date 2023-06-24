@@ -21,7 +21,7 @@ function execNow() {
     return;
   }
   // 登録処理
-  Utilities.sleep(4000);
+  RegisterModule.registerNow();
 
   SheetUtilModule.displayDialog('処理完了しました。');
 }

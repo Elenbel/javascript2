@@ -16,6 +16,8 @@ namespace RegisterModule {
 
   // 即時登録処理
   export const registerNow = () => {
-    // セルの入力内容を取得
+    // カレンダーのスケジュールリストを取得
+    const calendarSchedules = CalendarApiModule.getCalendarSchedules();
+    console.log(calendarSchedules.map((c) => c.getTitle()));
   };
 }
