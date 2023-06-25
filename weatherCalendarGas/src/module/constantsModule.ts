@@ -82,4 +82,11 @@ namespace ConstantsModule {
     { prefecture: '鹿児島', lat: 31.56028, lon: 130.55806 },
     { prefecture: '沖縄', lat: 26.2125, lon: 127.68111 },
   ];
+
+  // 天気の情報
+  export type WeatherInfo = {
+    infoDate: Date;
+    rain: number;
+    weather: string;
+  };
 }
