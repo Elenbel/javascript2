@@ -21,10 +21,10 @@ namespace CalendarApiModule {
   };
 
   // 現在日時含めて6日間のスケジュールを取得
-  export const getCalendarSchedules = (): GoogleAppsScript.Calendar.CalendarEvent[] => {
+  export const getCalendarSchedules = (): GoogleAppsScript.Calendar.CalendarEvent[] | undefined => {
     const calendar = CalendarApiModule.getCalendarObject();
     if (!calendar) {
-      return [];
+      return undefined;
     }
 
     // 現在日付

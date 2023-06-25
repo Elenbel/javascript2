@@ -18,6 +18,16 @@ namespace RegisterModule {
   export const registerNow = () => {
     // カレンダーのスケジュールリストを取得
     const calendarSchedules = CalendarApiModule.getCalendarSchedules();
-    console.log(calendarSchedules.map((c) => c.getTitle()));
+    if (!calendarSchedules) {
+      return 'カレンダーが取得できませんでした。';
+    }
+
+    if (calendarSchedules.length > 0) {
+      // 地名と緯度・経度を管理するMap
+
+      console.log(calendarSchedules.map((c) => c.getTitle()));
+    }
+
+    return undefined;
   };
 }

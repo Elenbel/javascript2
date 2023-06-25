@@ -15,13 +15,17 @@ function execNow() {
   SheetUtilModule.displayDialog('処理中です。少々お待ちください・・・。');
 
   // 入力のバリデーション
-  const errorMessage = RegisterModule.validationInput();
-  if (errorMessage) {
-    SheetUtilModule.displayDialog(errorMessage);
+  const validateErrorMessage = RegisterModule.validationInput();
+  if (validateErrorMessage) {
+    SheetUtilModule.displayDialog(validateErrorMessage);
     return;
   }
   // 登録処理
-  RegisterModule.registerNow();
+  const registerErrorMessage = RegisterModule.registerNow();
+  if (registerErrorMessage) {
+    SheetUtilModule.displayDialog(registerErrorMessage);
+    return;
+  }
 
   SheetUtilModule.displayDialog('処理完了しました。');
 }
