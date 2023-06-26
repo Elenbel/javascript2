@@ -152,4 +152,36 @@ namespace LocationSettingModule {
 
     return 'デフォルト地域設定の区分を選択してください。';
   };
+
+  // デフォルト地域設定の緯度・経度取得
+  export const getDefaultLatLon = (): ConstantsModule.LatLon | undefined => {
+    const sheet = SheetUtilModule.getSettingSheet();
+    if (!sheet) {
+      return undefined;
+    }
+    const selectCell: GoogleAppsScript.Spreadsheet.Range = sheet.getRange(
+      ConstantsModule.LOCATION_SELECT_POS.row,
+      ConstantsModule.LOCATION_SELECT_POS.column,
+    );
+    if (selectCell.getValue() == ConstantsModule.LOCATION_SELECT_PREFECTURE) {
+      const prefectureCell: GoogleAppsScript.Spreadsheet.Range = sheet.getRange(
+        ConstantsModule.PREFECTURE_SELECT_POS.row,
+        ConstantsModule.PREFECTURE_SELECT_POS.column,
+      );
+      const prefectureValue = ConstantsModule.PREFECTURE_LAT_LON_LIST.find(
+        (p) => p.prefecture == prefectureCell.getValue(),
+      );
+      if (!prefectureValue) {
+        return undefined;
+      }
+      return {
+        lat: prefectureValue.lat,
+        lon: prefectureValue.lon,
+      };
+    } else if (selectCell.getValue() == ConstantsModule.LOCATION_SELECT_INPUT) {
+      return LocationSettingModule.getLocationLatLon();
+    }
+
+    return undefined;
+  };
 }
