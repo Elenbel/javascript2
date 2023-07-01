@@ -10,7 +10,12 @@ namespace GeoCodingApiModule {
     const location = res.results[0].geometry.location;
     return {
       lat: location.lat,
-      lon: location.lon,
+      lon: location.lng,
     };
+  };
+
+  // 緯度・経度のオブジェクトから格納用キーに変換
+  export const getLatLonKeyFromObject = (latLon: ConstantsModule.LatLon): string => {
+    return `${latLon.lat}-${latLon.lon}`;
   };
 }

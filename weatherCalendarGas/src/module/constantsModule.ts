@@ -86,7 +86,8 @@ namespace ConstantsModule {
   // 天気の情報
   export type WeatherInfo = {
     infoDate: Date;
-    rain: number;
     weather: string;
+    precipitationProbabilityPercent: number;
+    temperature: number;
   };
 }

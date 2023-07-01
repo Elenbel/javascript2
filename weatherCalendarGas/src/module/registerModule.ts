@@ -54,8 +54,19 @@ namespace RegisterModule {
         if (!latLon) {
           latLon = defaultLatLon;
         }
+        if (!latLon) {
+          return;
+        }
+        const latLonKey = GeoCodingApiModule.getLatLonKeyFromObject(latLon);
 
-        // 緯度・経度から天気情報を取得
+        let weatherInfoList = latLonWeatherMap.get(latLonKey);
+        if (!weatherInfoList) {
+          weatherInfoList = WeatherApiModule.getWeatherInfoListFromLatLon(latLon);
+          latLonWeatherMap.set(latLonKey, weatherInfoList);
+        }
+        if (!weatherInfoList) {
+          return;
+        }
       });
     }
 
