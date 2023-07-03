@@ -15,7 +15,7 @@ namespace WeatherApiModule {
         const hourlyDataLength = hourlyData.time.length;
         for (let i = 0; i < hourlyDataLength; i++) {
           weatherInfoList.push({
-            infoDate: Utilities.parseDate(hourlyData.time[i], 'JST', 'yyyy-MM-ddTHH:mm'),
+            infoDate: Utilities.parseDate(hourlyData.time[i], 'JST', "yyyy-MM-dd'T'HH:mm"),
             weather: WeatherApiModule.getWeatherNameFromCode(hourlyData.weathercode[i]),
             precipitationProbabilityPercent: parseFloat(hourlyData.precipitation_probability[i]),
             temperature: parseFloat(hourlyData.temperature_2m[i]),
