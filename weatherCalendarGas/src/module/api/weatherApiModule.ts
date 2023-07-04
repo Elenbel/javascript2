@@ -46,4 +46,19 @@ namespace WeatherApiModule {
       return '雷雨';
     }
   };
+
+  // 対象の日時で最も差分が少ない天気を取得
+  export const getNearlyTimeWeather = (
+    targetDateUnixTime: number,
+    weatherInfoList: ConstantsModule.WeatherInfo[],
+  ): ConstantsModule.WeatherInfo => {
+    return weatherInfoList
+      .map((w) => {
+        return { ...w, diffAbs: Math.abs(targetDateUnixTime - w.infoDate.getTime()) };
+      })
+      .slice()
+      .sort(function (a, b) {
+        return a.diffAbs < b.diffAbs ? -1 : 1; //差分の絶対値の昇順ソート
+      })[0];
+  };
 }

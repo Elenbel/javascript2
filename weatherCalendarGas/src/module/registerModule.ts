@@ -59,14 +59,17 @@ namespace RegisterModule {
         }
         const latLonKey = GeoCodingApiModule.getLatLonKeyFromObject(latLon);
 
+        // 緯度・経度から天気情報を取得
         let weatherInfoList = latLonWeatherMap.get(latLonKey);
         if (!weatherInfoList) {
           weatherInfoList = WeatherApiModule.getWeatherInfoListFromLatLon(latLon);
           latLonWeatherMap.set(latLonKey, weatherInfoList);
         }
-        if (!weatherInfoList) {
+        if (!weatherInfoList || weatherInfoList.length === 0) {
           return;
         }
+
+        // スケジュールの登録
       });
     }
 

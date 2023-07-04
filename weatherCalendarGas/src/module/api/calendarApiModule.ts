@@ -38,4 +38,35 @@ namespace CalendarApiModule {
 
     return calendar.getEvents(nowDate, after5DayDate);
   };
+
+  // 天気情報をカレンダーの予定に登録
+  export const registerWeatherToSchedule = (
+    schedule: GoogleAppsScript.Calendar.CalendarEvent,
+    weatherInfoList: ConstantsModule.WeatherInfo[],
+  ) => {
+    // 予定の日時
+    const startTime = schedule.getStartTime();
+    const endTime = schedule.getEndTime();
+    // 天気の取得
+    const startTimeWeather = WeatherApiModule.getNearlyTimeWeather(
+      startTime.getTime(),
+      weatherInfoList,
+    );
+    const endTimeWeather = WeatherApiModule.getNearlyTimeWeather(
+      endTime.getTime(),
+      weatherInfoList,
+    );
+
+    // 予定の説明欄
+    let description = schedule.getDescription();
+    // 既に天気情報があった場合は削除
+    const weatherDescPosition = description.indexOf('＜天気情報＞');
+    if (weatherDescPosition > -1) {
+      description = description.substring(0, weatherDescPosition);
+    }
+    // 改行コードで終わってなければ付与
+    if (!description.endsWith('\n')) {
+      description = description + '\n';
+    }
+  };
 }
