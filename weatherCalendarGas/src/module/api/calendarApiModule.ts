@@ -40,7 +40,7 @@ namespace CalendarApiModule {
   };
 
   // 天気情報をカレンダーの予定に登録
-  export const registerWeatherToSchedule = (
+  export const registerWeatherInfoToScheduleDescription = (
     schedule: GoogleAppsScript.Calendar.CalendarEvent,
     weatherInfoList: ConstantsModule.WeatherInfo[],
   ) => {
@@ -68,5 +68,17 @@ namespace CalendarApiModule {
     if (!description.endsWith('\n')) {
       description = description + '\n';
     }
+
+    // 天気情報を追記
+    description = description + '＜天気情報＞\n\n';
+    description =
+      description +
+      `【開始日時の天気】\n${WeatherApiModule.getDescriptionFromWeatherInfo(startTimeWeather)}\n\n`;
+    description =
+      description +
+      `【終了日時の天気】\n${WeatherApiModule.getDescriptionFromWeatherInfo(endTimeWeather)}\n\n`;
+
+    // 予定を更新
+    schedule.setDescription(description);
   };
 }

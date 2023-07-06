@@ -61,4 +61,16 @@ namespace WeatherApiModule {
         return a.diffAbs < b.diffAbs ? -1 : 1; //差分の絶対値の昇順ソート
       })[0];
   };
+
+  // 天気情報の文面を作成
+  export const getDescriptionFromWeatherInfo = (
+    weatherInfo: ConstantsModule.WeatherInfo,
+  ): string => {
+    let description = '';
+    description = description + `天気：${weatherInfo.weather}\n`;
+    description = description + `気温：${weatherInfo.temperature}度\n`;
+    description = description + `降水確率：${weatherInfo.precipitationProbabilityPercent}%`;
+
+    return description;
+  };
 }

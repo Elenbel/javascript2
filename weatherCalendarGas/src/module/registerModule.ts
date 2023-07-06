@@ -32,6 +32,8 @@ namespace RegisterModule {
       const locationLatLonMap = new Map<string, ConstantsModule.LatLon>();
       // 緯度・経度から天気情報を取得するMap
       const latLonWeatherMap = new Map<string, ConstantsModule.WeatherInfo[]>();
+
+      // 予定のリストをループして更新
       calendarSchedules.forEach((schedule) => {
         // 緯度・経度を取得
         let latLon = undefined;
@@ -69,7 +71,8 @@ namespace RegisterModule {
           return;
         }
 
-        // スケジュールの登録
+        // スケジュールの説明欄に天気を登録
+        CalendarApiModule.registerWeatherInfoToScheduleDescription(schedule, weatherInfoList);
       });
     }
 
