@@ -3,9 +3,17 @@ namespace ConstantsModule {
   // テーブルヘッダーの色
   export const COLOR_TABLE_HEADER = '#cfe2f3';
 
+  // セルの位置
   export type CellPosition = {
     row: number;
     column: number;
+  };
+  // 天気の情報
+  export type WeatherInfo = {
+    infoDate: Date;
+    weather: string;
+    precipitationProbabilityPercent: number;
+    temperature: number;
   };
 
   // カレンダーID入力の区分プルダウン
@@ -83,11 +91,7 @@ namespace ConstantsModule {
     { prefecture: '沖縄', lat: 26.2125, lon: 127.68111 },
   ];
 
-  // 天気の情報
-  export type WeatherInfo = {
-    infoDate: Date;
-    weather: string;
-    precipitationProbabilityPercent: number;
-    temperature: number;
-  };
+  // 定期実行の時間入力位置
+  export const TRIGGER_TIME_INPUT_POS: CellPosition = { row: 36, column: 3 };
+  export const TRIGGER_TIME_INPUT_CHECK_POS: CellPosition = { row: 36, column: 4 };
 }
