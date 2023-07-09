@@ -1,7 +1,12 @@
 # 概要
 
 天気の情報を Google Calendar の説明欄に追記するスクリプトです。  
-設定により定期的に更新することもできます。
+設定により定期的に更新することもできます。  
+
+<img width="734" alt="スクリーンショット 2023-07-10 1 18 46" src="https://github.com/someone7140/javascript/assets/33390784/802bff35-4b19-4c07-8e45-3d27316550d0">
+      
+カレンダーには以下のようなイメージで登録されます。  
+<img width="440" alt="スクリーンショット 2023-07-10 1 17 47" src="https://github.com/someone7140/javascript/assets/33390784/1e8f188a-849e-4f64-87e6-e57c6d028e79">
 
 # 使い方など
 
