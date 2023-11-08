@@ -1,0 +1,30 @@
+<style>
+  .loading {
+    font-size: 30px;
+  }
+
+  .loading:after {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    -webkit-animation: ellipsis steps(5, end) 1300ms infinite; /* アニメーションの表示間隔のステップと全体時間 */
+    animation: ellipsis steps(5, end) 1300ms infinite;
+    content: "★★★★"; /* 全部表示させた時の文字 */
+    width: 0px;
+    color: red;
+  }
+
+  @keyframes ellipsis {
+    to {
+      width: 5em; /* 全部表示させた時の幅 */
+    }
+  }
+
+  @-webkit-keyframes ellipsis {
+    to {
+      width: 5em;
+    }
+  }
+</style>
+
+<span class="loading">Loading</span>
